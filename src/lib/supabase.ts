@@ -1,5 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
+import ws from "ws";
+
+// Assign WebSocket globally for Node 20 environments
+globalThis.WebSocket = ws as any;
 
 dotenv.config();
 

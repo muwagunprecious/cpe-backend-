@@ -8,6 +8,7 @@ import { markAttendance, getLiveAttendance } from "./controllers/attendance.cont
 import { askAssistant } from "./controllers/ai.controller.js";
 import { submitAssignment, getSubmissions, gradeSubmission } from "./controllers/assignments.controller.js";
 import { getComplaints, replyComplaint } from "./controllers/complaints.controller.js";
+import { uploadAvatar } from "./controllers/users.controller.js";
 
 dotenv.config();
 
@@ -63,6 +64,9 @@ app.patch("/api/assignments/submissions/:submissionId/grade", requireAuth, requi
 // ── Complaints ────────────────────────────────────────────────────────────────
 app.get("/api/complaints", requireAuth, requireRole(["lecturer", "admin"]), getComplaints);
 app.patch("/api/complaints/:id/reply", requireAuth, requireRole(["lecturer", "admin"]), replyComplaint);
+
+// ── User Profile / Avatar ──────────────────────────────────────────────────────
+app.post("/api/users/avatar", requireAuth, upload.single("avatar"), uploadAvatar);
 
 // ── Global Error Handler ──────────────────────────────────────────────────────
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
